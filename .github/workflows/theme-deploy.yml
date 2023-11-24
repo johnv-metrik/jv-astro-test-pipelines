@@ -77,12 +77,11 @@ jobs:
         if: github.event.action == 'closed'
         run: shopify theme delete --theme git-${{ env.GITHUB_HEAD_REF_SLUG_URL }}
 
-        notification:
-          - name: Post to a Slack channel
-            id: slack
-            uses: slackapi/slack-github-action@v1.24.0
-            with:
-              channel-id: ${{ vars.SLACK_BUILD_CHANNEL_ID }}'
-              slack-message: "Build Complete: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
-            env:
-              SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      - name: Post to a Slack channel
+        id: slack
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          channel-id: ${{ vars.SLACK_BUILD_CHANNEL_ID }}'
+          slack-message: "Build Complete: ${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head_commit.url }}"
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
