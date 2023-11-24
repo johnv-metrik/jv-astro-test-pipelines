@@ -69,7 +69,7 @@ jobs:
         run: npm install -g @shopify/cli @shopify/theme
 
       - name: Update Theme
-        run: shopify theme push --path ./ --theme git-${{ env.GITHUB_HEAD_REF_SLUG_URL }}
+        run: shopify theme push --path ./ --theme --store=${{ env.SHOPIFY_STORE }} --unpublished
 
       - name: Create Theme
         if: github.event.action == 'opened' || github.event.action == 'reopened'
