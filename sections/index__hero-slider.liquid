@@ -1,0 +1,86 @@
+{% liquid
+  if section.settings.is_above_the_fold
+    if settings.transparent_header_home
+      assign section_class = 'h-[calc(var(--content-height-abovefold,_100vh)_+_62px)] md:h-[calc(var(--content-height-abovefold,_100vh)_+_58px)]'
+    else
+      assign section_class = 'h-[var(--content-height-abovefold,_100vh)]'
+    endif
+  else
+    assign section_class = 'h-[var(--content-height-underfold,_100vh)]'
+  endif
+
+  if section.settings.full_width == false
+    assign section_class = section_class | append: ' container no-padding'
+  endif
+%}
+
+<div vue-init v-cloak class="hero-slider {{section_class}}">
+  {%- if section.blocks.size > 0 -%}
+    <keen-slider
+            :arrows="false"
+            :pagination="{{section.blocks.size}} > 1"
+            :options="{
+        slides: {
+          spacing: 30
+        }
+      }"
+            class="w-full h-full overflow-hidden"
+            :dynamic-dot-color="true"
+            {%- if section.settings.is_auto_scroll %}
+              :autoplay="{{ section.settings.announcement_autoplay_speed | times: 1000 }}"
+            {%- endif %}
+    >
+    {%- for block in section.blocks -%}
+      {% render block %}
+    {%- endfor %}
+  </keen-slider>
+{%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Hero Slider",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "is_above_the_fold",
+      "label": "Above the fold?",
+      "default": false,
+      "info": "If this section is 'above the fold', mark as true. The first image will not be lazy loaded, to improve performance."
+    },
+    {
+      "type": "checkbox",
+      "id": "is_auto_scroll",
+      "label": "Auto scroll?"
+    },
+    {
+      "type": "range",
+      "id": "announcement_autoplay_speed",
+      "label": "Scrolling speed",
+      "default": 3,
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "unit": "s"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Is full width?",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Slider",
+      "category": "Images"
+    }
+  ]
+}
+{% endschema %}

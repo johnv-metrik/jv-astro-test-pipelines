@@ -1,0 +1,32 @@
+development:
+  password: shptka_deeadea1a060ffd0441ffdea5bcc4d45
+  theme_id: 133336662169
+  store: mindarc-integrations.myshopify.com
+  timeout: 60s
+  ignores:
+    - themekit_ignores
+
+production:
+  password: 
+  theme_id:
+  store:
+  timeout: 60s
+  readonly: true
+  ignores:
+    - themekit_ignores
+
+# To backup/sync production settings only
+config-only:
+  password: # Store details of download/deploy destination
+  theme_id: 
+  store: 
+  timeout: 60s
+  readonly: true
+  ignore_files:
+    - assets/
+    - config/settings_schema.json
+    - layout/
+    - locales/
+    - sections/
+    - snippets/
+    - templates/*.liquid

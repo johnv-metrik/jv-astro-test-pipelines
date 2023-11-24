@@ -1,0 +1,72 @@
+<div vue-init v-cloak class="flex flex-col md:flex-row{% if section.settings.full_width == false %} container no-padding{% endif %}">
+    {%- if section.blocks.size > 0 -%}
+      {% liquid
+          if section.settings.full_width
+              assign full_width = 1920 | divided_by: section.blocks.size
+              assign full_size = 100 | divided_by: section.blocks.size | append: "vw"
+          else
+              assign full_width = 1440 | divided_by: section.blocks.size
+              assign full_size = 1440 | divided_by: section.blocks.size | append: "px"
+          endif
+          assign image_sizes = '(max-width: 767px) 100vw, ' | append: full_size
+
+          if section.settings.is_above_the_fold
+              assign lazyload = false
+          else
+              assign lazyload = true
+          endif
+      %}
+
+      {%- for block in section.blocks -%}
+          {% render block %}
+      {%- endfor %}
+    {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Two Image Block CTA",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "is_above_the_fold",
+      "label": "Above the fold?",
+      "default": false,
+      "info": "If this section is 'above the fold', mark as true. The first image will not be lazy loaded, to improve performance."
+    },
+    {
+      "type": "range",
+      "id": "aspect_ratio",
+      "min": 60,
+      "max": 160,
+      "step": 1,
+      "label": "Blocks aspect ratio",
+      "default": 100,
+      "info": "Where 100 = square, > 100 = landscape and < 100 = portrait."
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Is full width?"
+    },
+    {
+      "type": "number",
+      "id": "max_height",
+      "label": "Max height in px",
+      "info": "Leave blank if none"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image Blocks",
+      "category": "Image Blocks"
+    }
+  ]
+}
+{% endschema %}

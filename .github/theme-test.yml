@@ -1,0 +1,27 @@
+name: Run Test Suite
+
+on: [workflow_dispatch]
+
+jobs:
+  test:
+    name: Test API endpoints
+    runs-on: ubuntu-latest
+    environment: "UAT"
+    strategy:
+      matrix:
+        node-version: [16]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm i -g newman
+      - run: |
+          newman run https://api.postman.com/collections/$PM_COLLECTION\?access_key\=$PM_KEY \
+          --env-var "url=https://archierose-worker-staging.mindarctest.workers.dev" \
+          --env-var "version=v1"
+        env:
+          PM_KEY: ${{ secrets.PM_KEY }}
+          PM_COLLECTION: "25696194-46918104-fa25-4ca4-8395-21cc74bb3393"
+

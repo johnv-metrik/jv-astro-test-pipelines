@@ -1,0 +1,60 @@
+<div
+  vue-init
+  v-cloak
+>
+  {% for block in section.blocks %}
+    {% if block.type == 'video' %}
+      {%- capture sources_data -%}
+        {%- assign video_sources = block.settings.video.sources | where: "format", "mp4" -%}
+        {%- for video_source in video_sources -%}
+          '{{ video_source.url }}'{%- unless forloop.last -%},{%- endunless -%}
+        {%- endfor -%}
+      {%- endcapture -%}
+      {% if block.settings.video.id %}
+        <video-wrapper
+          :is-lazy-loaded="{{ block.settings.lazyload }}"
+          video-type="html"
+          video-id="{{ block.settings.video.id }}"
+          aspect-ratio="100%"
+          :is-autoplay="true"
+          :is-mute="true"
+          :sources="[{{ sources_data }}]"
+          thumbnail="{{ block.settings.video.preview_image }}"
+          thumbnail-alt="{{ block.settings.video.alt }}"
+          classes="w-full"
+        ></video-wrapper>
+      {% endif %}
+    {% else %}
+      {% if block.settings.video_url.id %}
+        <video-wrapper
+        video-type="{{ block.settings.video_url.type }}"
+        video-id="{{ block.settings.video_url.id }}"
+        aspect-ratio="100%"
+        :is-autoplay="true"
+        :is-mute="true"
+      ></video-wrapper>
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+</div>
+
+{% schema %}
+  {
+    "name": "Video",
+    "tag": "section",
+    "settings": [
+    ],
+    "max_blocks": 1,
+    "blocks": [
+      {
+        "type": "@app"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Video",
+        "category": "Video"
+      }
+    ]
+  }
+{% endschema %}

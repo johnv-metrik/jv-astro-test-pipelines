@@ -1,0 +1,29 @@
+<section>
+    <div class="container py-8">
+        <div class="md:flex space-y-4 md:space-y-0 md:space-x-4">
+            {%- for block in section.blocks -%}
+                <div class="md:flex-1">
+                    {% render block %}
+                </div>
+            {%- endfor -%}
+        </div>
+    </div>
+</section>
+
+{% schema %}
+{
+  "name": "Columns",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "@app"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Columns",
+      "category": "Columns"
+    }
+  ]
+}
+{% endschema %}
