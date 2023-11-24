@@ -4,6 +4,9 @@ defaults:
   run:
     working-directory: .
 
+env:
+  SHOPIFY_FLAG_STORE: ${{ vars.SHOPIFY_STORE }}
+
 on:
   workflow_dispatch:
     inputs:
