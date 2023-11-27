@@ -67,7 +67,7 @@ jobs:
 
       - name: Update Theme
         env:
-          SHOPIFY_FLAG_STORE: ${{ vars.SHOPIFY_STORE }}
+          SHOPIFY_FLAG_STORE: '${{ vars.SHOPIFY_STORE }}'
         run: shopify theme push --path ./ --unpublished
 
       - name: Create Theme
