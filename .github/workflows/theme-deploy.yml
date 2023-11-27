@@ -65,18 +65,12 @@ jobs:
       - name: Install Shopify CLI
         run: npm install -g @shopify/cli @shopify/theme
 
-      - name: Update Theme
+      - name: Deploy Theme
         env:
-          SHOPIFY_FLAG_STORE: '${{ vars.SHOPIFY_STORE }}'
-        run: shopify theme push --path ./ --unpublished
-
-      - name: Create Theme
-        if: github.event.action == 'opened' || github.event.action == 'reopened'
-        run: shopify theme push --path ./ --theme git-${{ env.GITHUB_HEAD_REF_SLUG_URL }} --unpublished
-
-      - name: Delete Theme
-        if: github.event.action == 'closed'
-        run: shopify theme delete --theme git-${{ env.GITHUB_HEAD_REF_SLUG_URL }}
+          SHOPIFY_FLAG_STORE: ${{ vars.SHOPIFY_STORE }}
+          SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
+          SHOPIFY_CLI_TTY: 0
+        run: shopify theme push --path . --theme ${{ vars.SHOPIFY_THEME_ID }}
 
       - name: Post to a Slack channel
         id: slack
