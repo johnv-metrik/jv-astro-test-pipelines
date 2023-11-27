@@ -49,10 +49,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-
-      - name: GitHub Refs
-        uses: rlespinasse/github-slug-action@v4
-
       - uses: actions/setup-node@v3
         with:
           node-version: 18
@@ -67,10 +63,10 @@ jobs:
 
       - name: Deploy Theme
         env:
-          SHOPIFY_FLAG_STORE: ${{ vars.SHOPIFY_STORE }}
+          SHOPIFY_FLAG_STORE: 'mindarc-integrations.myshopify.com'
           SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
           SHOPIFY_CLI_TTY: 0
-        run: shopify theme push --path . --theme ${{ vars.SHOPIFY_THEME_ID }}
+        run: shopify theme push --path . --theme 133336662169
 
       - name: Post to a Slack channel
         id: slack
