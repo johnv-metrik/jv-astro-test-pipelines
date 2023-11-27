@@ -68,7 +68,7 @@ jobs:
       - name: Update Theme
         env:
           SHOPIFY_FLAG_STORE: ${{ vars.SHOPIFY_STORE }}
-        run: shopify theme push --path ./ --theme --unpublished
+        run: shopify theme push --path ./ --unpublished
 
       - name: Create Theme
         if: github.event.action == 'opened' || github.event.action == 'reopened'
