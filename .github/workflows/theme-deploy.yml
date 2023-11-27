@@ -66,7 +66,7 @@ jobs:
           SHOPIFY_FLAG_STORE: 'mindarc-integrations.myshopify.com'
           SHOPIFY_CLI_THEME_TOKEN: ${{ secrets.SHOPIFY_ACCESS_TOKEN }}
           SHOPIFY_CLI_TTY: 0
-        run: shopify theme push --path . --theme 133336662169
+        run: shopify theme push --path . --theme 133336662169 --force
 
       - name: Post to a Slack channel
         id: slack
