@@ -66,9 +66,7 @@ jobs:
         run: npm install -g @shopify/cli @shopify/theme
 
       - name: Update Theme
-        env:
-          SHOPIFY_FLAG_STORE: ${{ vars.SHOPIFY_STORE }}
-        run: shopify theme push --path ./ --theme --store=${{ env.SHOPIFY_FLAG_STORE }} --unpublished
+        run: shopify theme push --path ./ --theme --store=${{ vars.SHOPIFY_STORE }} --unpublished
 
       - name: Create Theme
         if: github.event.action == 'opened' || github.event.action == 'reopened'
